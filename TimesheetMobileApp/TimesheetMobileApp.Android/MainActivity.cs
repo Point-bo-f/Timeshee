@@ -26,6 +26,7 @@ namespace TimesheetMobileApp.Droid
             TimesheetMobileApp.Models.GpsLocationModel.Altitude =
                 location.Altitude;
         }
+        
 
         public void OnProviderDisabled(string provider)
         {
