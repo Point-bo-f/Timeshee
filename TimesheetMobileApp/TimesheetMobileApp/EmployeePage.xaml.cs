@@ -6,6 +6,10 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using TimesheetMobileApp;
 
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System.IO;
+
 namespace TimesheetMobileApp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -27,7 +31,32 @@ namespace TimesheetMobileApp
         //{
         //    throw new NotImplementedException();
         //}
+        public async void TakePhoto(object sender, EventArgs e)
+        {
+            string employee = employeeList.SelectedItem?.ToString();
+            if (!string.IsNullOrEmpty(employee))
+            {
+                await CrossMedia.Current.Initialize();
 
+                if (!CrossMedia.Current.IsPickPhotoSupported || !CrossMedia.Current.IsCameraAvailable)
+                {
+                    await DisplayAlert("Ops", "Kamera ei löydy", "Ok");
+                    return;
+                }
+                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                {
+                    SaveToAlbum = true,
+                    Directory = "Demo"
+        });
+                if (file == null)
+                    return;
+                FotoImage.Source = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+            }
+        }
         public async void LoadEmployees(object sender, EventArgs e)
         {
 

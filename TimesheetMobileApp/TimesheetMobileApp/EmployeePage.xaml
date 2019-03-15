@@ -10,6 +10,9 @@
                 
             </ListView>
             <Button Text="List Work Assignments" Clicked="ListWorkAssignments"></Button>
+            <Button Text="Take Photo" Clicked="TakePhoto"/>
+            <Image x:Name="FotoImage" HeightRequest="300" WidthRequest="300"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
